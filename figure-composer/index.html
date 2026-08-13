@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FigureYa Figure Composer</title>
+  <link rel="stylesheet" href="figure-composer.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>FigureYa Figure Composer</h1>
+      <p>鐭㈤噺浼樺厛鐨勭鐮斿浘浜や簰缂栬緫銆侀厤鑹茬粺涓€涓庣粍鍥惧伐鍏?/p>
+    </div>
+    <div class="top-actions">
+      <label class="button secondary">瀵煎叆 SVG / 鍥剧墖<input id="fileInput" type="file" accept=".svg,image/*,.pdf" hidden /></label>
+      <button id="loadDemo" class="secondary">杞藉叆绀轰緥</button>
+      <button id="downloadSvg">瀵煎嚭 SVG</button>
+      <button id="exportPng">600 dpi PNG</button>
+      <button id="exportCompressed" class="secondary">鍘嬬缉鍥?/button>
+      <button id="printPdf" class="secondary">鎵撳嵃 / PDF</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar left-panel">
+      <section>
+        <div class="section-title">鍥惧眰 / Panels</div>
+        <div id="panelList" class="panel-list"></div>
+        <div class="row">
+          <button id="addPanel" class="small">锛?Panel</button>
+          <button id="autoLayout" class="small">鑷姩鎺掔増</button>
+        </div>
+      </section>
+      <section>
+        <div class="section-title">鍏冪礌鎿嶄綔</div>
+        <div class="row wrap">
+          <button id="groupSelected" class="small">缂栫粍</button>
+          <button id="ungroupSelected" class="small">瑙ｇ粍</button>
+          <button id="bringFront" class="small">缃《</button>
+          <button id="sendBack" class="small">缃簳</button>
+        </div>
+        <div class="row wrap">
+          <button data-align="left" class="small">宸﹀榻?/button>
+          <button data-align="center" class="small">姘村钩灞呬腑</button>
+          <button data-align="right" class="small">鍙冲榻?/button>
+        </div>
+      </section>
+      <section>
+        <div class="section-title">鎶曠椋庢牸</div>
+        <select id="paletteSelect">
+          <option value="nature">Nature muted</option>
+          <option value="cell">Cell teal-orange</option>
+          <option value="mono">Black & white</option>
+          <option value="custom">鑷畾涔夊綋鍓嶈壊</option>
+        </select>
+        <button id="applyPalette" class="full">缁熶竴鐭㈤噺閰嶈壊</button>
+        <p class="hint">鍙細淇敼 SVG 鐭㈤噺瀵硅薄锛涘鍏ョ殑鏍呮牸鍥剧墖淇濈暀鍘熷鍍忕礌銆?/p>
+      </section>
+    </aside>
+
+    <section class="canvas-area">
+      <div class="canvas-toolbar">
+        <span id="selectionInfo">鏈€夋嫨鍏冪礌</span>
+        <span class="zoom-label">缂╂斁 <input id="zoom" type="range" min="50" max="160" value="90" /> <span id="zoomValue">90%</span></span>
+      </div>
+      <div id="canvasViewport" class="canvas-viewport">
+        <svg id="figureCanvas" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="绉戠爺鍥剧敾甯?></svg>
+      </div>
+      <div class="statusbar"><span id="status">灏辩华</span><span>婧愭枃浠讹細SVG / figure.json 路 PDF 鍙€氳繃鎵撳嵃瀵煎嚭</span></div>
+    </section>
+
+    <aside class="sidebar inspector">
+      <section>
+        <div class="section-title">閫変腑瀵硅薄</div>
+        <div id="emptyInspector" class="hint">鐐瑰嚮鐢诲竷涓殑鍏冪礌寮€濮嬬紪杈戙€?/div>
+        <div id="inspectorForm" hidden>
+          <label>绫诲瀷 <input id="elType" disabled /></label>
+          <label>鏂囧瓧 <input id="elText" /></label>
+          <div class="two-col"><label>X <input id="elX" type="number" /></label><label>Y <input id="elY" type="number" /></label></div>
+          <div class="two-col"><label>瀹?<input id="elW" type="number" /></label><label>楂?<input id="elH" type="number" /></label></div>
+          <div class="two-col"><label>濉厖 <input id="elFill" type="color" /></label><label>鎻忚竟 <input id="elStroke" type="color" /></label></div>
+          <label>瀛椾綋澶у皬 <input id="elFontSize" type="number" min="4" max="120" /></label>
+          <button id="applyInspector" class="full">搴旂敤淇敼</button>
+        </div>
+      </section>
+      <section>
+        <div class="section-title">鑷劧璇█寰皟</div>
+        <textarea id="commandInput" rows="5" placeholder="渚嬪锛氭妸鎵€鏈?WB 鏉″甫鍔犻粦妗嗭紱浣跨敤 Nature 閰嶈壊锛涙í鍚戞帓鍒楁墍鏈?panel锛涙坊鍔?A B C panel 鍙?></textarea>
+        <button id="runCommand" class="full">鎵ц淇敼</button>
+        <p class="hint">褰撳墠鍘熷瀷鏀寔甯哥敤鎺掔増銆佽竟妗嗐€乸anel 鍙峰拰閰嶈壊鍛戒护锛涘悗缁彲鎺ュ叆 Codex 鐢熸垚鏇村鏉傜殑 SVG patch銆?/p>
+      </section>
+      <section>
+        <div class="section-title">瀵煎嚭璁剧疆</div>
+        <label>鐩爣瀹藉害锛坢m锛?input id="printWidth" type="number" value="180" min="20" /></label>
+        <label>PNG 缂╂斁鍊嶆暟 <input id="pngScale" type="number" value="5" min="1" max="12" /></label>
+        <label class="check"><input id="includeSelection" type="checkbox" checked /> 淇濈暀缂栬緫鏍囪锛堝鍑烘椂鑷姩鍏抽棴锛?/label>
+      </section>
+    </aside>
+  </main>
+  <script src="figure-composer.js"></script>
+</body>
+</html>
