@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/figure-composer
+      - main
   workflow_dispatch:
 
 permissions:
