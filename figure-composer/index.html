@@ -64,6 +64,20 @@
         <span id="selectionInfo">鏈€夋嫨鍏冪礌</span>
         <span class="zoom-label">缂╂斁 <input id="zoom" type="range" min="50" max="160" value="90" /> <span id="zoomValue">90%</span></span>
       </div>
+      <div id="contextToolbar" class="context-toolbar" hidden>
+        <button id="canvaUndo" class="tool-icon" title="Undo">鈫?/button>
+        <button id="canvaRedo" class="tool-icon" title="Redo">鈫?/button>
+        <span class="toolbar-divider"></span>
+        <button id="canvaDuplicate" class="tool-button">澶嶅埗</button>
+        <button id="canvaDelete" class="tool-button danger">鍒犻櫎</button>
+        <button id="canvaGroup" class="tool-button">缂栫粍</button>
+        <button id="canvaUngroup" class="tool-button">瑙ｇ粍</button>
+        <span class="toolbar-divider"></span>
+        <button id="canvaAlignLeft" class="tool-button">宸﹀榻?/button>
+        <button id="canvaAlignCenter" class="tool-button">灞呬腑</button>
+        <button id="canvaAlignTop" class="tool-button">椤剁瀵归綈</button>
+        <span id="guideStatus" class="guide-status">鎷栧姩鏃惰嚜鍔ㄥ惛闄?/span>
+      </div>
       <div id="canvasViewport" class="canvas-viewport">
         <svg id="figureCanvas" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="绉戠爺鍥剧敾甯?></svg>
       </div>
@@ -99,5 +113,6 @@
     </aside>
   </main>
   <script src="figure-composer.js"></script>
+  <script src="canva-interactions.js"></script>
 </body>
 </html>
